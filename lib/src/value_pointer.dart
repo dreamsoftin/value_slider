@@ -38,8 +38,9 @@ class ValuePointer extends StatelessWidget {
       children: [
         Transform.rotate(
           angle: rotateText ? pi / 2 : 0,
-          child: SizedBox(
-            width: 25,
+          child: Container(
+            alignment: Alignment.center,
+            width: 30,
             child: Text(
               weight?.toInt().toString() ?? "",
               style: valuePointerStyle,

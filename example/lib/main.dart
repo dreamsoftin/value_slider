@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:value_slider/value_slider.dart';
 
@@ -11,20 +13,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late ValueSliderController _controller;
+  late ValueSliderController _vcontroller;
+  late ValueSliderController _hcontroller;
   double _weight = 50.5;
   int _minWeight = 10;
 
   @override
   void initState() {
     super.initState();
-    _controller =
+    _vcontroller =
+        ValueSliderController(initialWeight: _weight, minWeight: _minWeight);
+    _hcontroller =
         ValueSliderController(initialWeight: _weight, minWeight: _minWeight);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _vcontroller.dispose();
+    _hcontroller.dispose();
     super.dispose();
   }
 
@@ -36,62 +42,53 @@ class _MyAppState extends State<MyApp> {
         centerTitle: true,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            child: VerticalValueSlider(
-              itemExtent: 10,
-              controller: _controller,
-              minWeight: 100,
-              maxWeight: 250,
-              config: PointerConfig(
-                pointerValueStyle: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
-                width: 100,
-                height: 3,
-                colors: [
-                  Colors.grey[500],
-                  Colors.grey[300],
-                  Colors.grey[200],
-                ],
+          VerticalValueSlider(
+            itemExtent: 5,
+            controller: _vcontroller,
+            minValue: 100,
+            maxValue: 250,
+            config: PointerConfig(
+              gap: 0,
+              pointerValueStyle: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
               ),
-              onChanged: (value) {
-                setState(() {
-                  _weight = value;
-                });
-              },
-              height: 200,
+              width: 50,
+              height: 2.5,
+              colors: [
+                Colors.grey[500],
+                Colors.grey[300],
+                Colors.grey[200],
+              ],
             ),
+            onChanged: (value) {},
+            height: 200,
           ),
-          // Container(
-          //   child: VerticalValueSlider(
-          //     itemExtent: 10,
-          //     controller: _controller,
-          //     minWeight: 100,
-          //     maxWeight: 250,
-          //     config: PointerConfig(
-          //       pointerValueStyle: TextStyle(
-          //         fontSize: 13,
-          //         fontWeight: FontWeight.bold,
-          //       ),
-          //       width: 3,
-          //       height: 100,
-          //       colors: [
-          //         Colors.grey[500],
-          //         Colors.grey[300],
-          //         Colors.grey[200],
-          //       ],
-          //     ),
-          //     onChanged: (value) {
-          //       setState(() {
-          //         _weight = value;
-          //       });
-          //     },
-          //     height: 200,
-          //   ),
-          // ),
+          HorizontalValueSlider(
+            itemExtent: 5,
+            controller: _hcontroller,
+            minValue: 100,
+            maxValue: 250,
+            config: PointerConfig(
+              gap: 0,
+              pointerValueStyle: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w400,
+              ),
+              width: 50,
+              height: 2.5,
+              colors: [
+                Colors.grey[500],
+                Colors.grey[300],
+                Colors.grey[200],
+              ],
+            ),
+            onChanged: (value) {
+              //log("Value $value");
+            },
+            height: 200,
+          ),
         ],
       ),
     );

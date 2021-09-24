@@ -7,12 +7,6 @@ class HorizontalValueSlider extends StatelessWidget {
   /// A controller for scroll views whose items have the same size.
   final ValueSliderController controller;
 
-  /// Maximum weight that the slider can be scrolled
-  final int maxValue;
-
-  /// Minimum weight that the slider can be scrolled
-  final int minValue;
-
   /// If non-null, requires the child to have exactly this height.
   final double? height;
 
@@ -43,8 +37,6 @@ class HorizontalValueSlider extends StatelessWidget {
   const HorizontalValueSlider({
     Key? key,
     required this.controller,
-    required this.maxValue,
-    required this.minValue,
     this.height,
     this.width,
     required this.config,
@@ -62,7 +54,7 @@ class HorizontalValueSlider extends StatelessWidget {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
         if (notification is ScrollUpdateNotification) {
-          var changedVal = (controller.selectedItem / 10) + minValue;
+          var changedVal = (controller.selectedItem / 10) + controller.minValue;
           onChanged(changedVal);
           controller.value = changedVal;
         }
@@ -120,9 +112,10 @@ class HorizontalValueSlider extends StatelessWidget {
                       physics: BouncingScrollPhysics(),
                       perspective: 0.0001,
                       childDelegate: ListWheelChildBuilderDelegate(
-                        childCount: (maxValue - minValue) * 10,
+                        childCount:
+                            (controller.maxValue - controller.minValue) * 10,
                         builder: (BuildContext context, int index) {
-                          index = index + minValue * 10;
+                          index = index + controller.minValue * 10;
                           return Center(
                             child: index % 10 == 0
                                 ? ValueListenableBuilder<double>(

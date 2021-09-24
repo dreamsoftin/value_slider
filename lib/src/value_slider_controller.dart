@@ -2,23 +2,19 @@ import 'package:flutter/cupertino.dart';
 
 class ValueSliderController extends FixedExtentScrollController
     implements ValueNotifier<double> {
-  ValueSliderController({
-    this.initialWeight = 0,
-    this.minWeight = 0,
-    this.value = 0,
-  })  : assert(minWeight >= 0),
-        super(
-          initialItem: ((initialWeight - minWeight) * 10).toInt(),
-        );
-
-  /// The page to show when first creating the scroll view.
-  ///
-  /// Defaults to 0 and must not be null.
-  final double initialWeight;
+  /// Maximum weight that the slider can be scrolled
+  final int maxValue;
 
   /// Minimum weight that the slider can be scrolled
-  final int minWeight;
+  final int minValue;
 
   @override
   double value;
+
+  ValueSliderController({
+    this.minValue = 0,
+    this.maxValue = 100,
+    this.value = 0,
+  })  : assert(maxValue >= 0),
+        super(initialItem: ((value - minValue) * 10).toInt());
 }

@@ -9,8 +9,6 @@ class VerticalValueSlider extends StatefulWidget {
   VerticalValueSlider({
     Key? key,
     required this.controller,
-    this.maxValue = 300,
-    this.minValue = 0,
     this.height = 300.0,
     required this.config,
     this.itemExtent = 15.0,
@@ -21,17 +19,10 @@ class VerticalValueSlider extends StatefulWidget {
     this.width,
     this.squeeze = 1,
   })  : assert(itemExtent >= 0),
-        assert(maxValue >= 0),
         super(key: key);
 
   /// A controller for scroll views whose items have the same size.
   final ValueSliderController controller;
-
-  /// Maximum weight that the slider can be scrolled
-  final int maxValue;
-
-  /// Minimum weight that the slider can be scrolled
-  final int minValue;
 
   /// If non-null, requires the child to have exactly this height.
   final double? height;
@@ -71,8 +62,8 @@ class _VerticalValueSliderState extends State<VerticalValueSlider> {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification notification) {
         if (notification is ScrollUpdateNotification) {
-          var changedVal =
-              (widget.controller.selectedItem / 10) + widget.minValue;
+          var changedVal = (widget.controller.selectedItem / 10) +
+              widget.controller.minValue;
           widget.onChanged(changedVal);
           widget.controller.value = changedVal;
         }
@@ -100,9 +91,11 @@ class _VerticalValueSliderState extends State<VerticalValueSlider> {
                     physics: BouncingScrollPhysics(),
                     perspective: 0.0001,
                     childDelegate: ListWheelChildBuilderDelegate(
-                      childCount: (widget.maxValue - widget.minValue) * 10,
+                      childCount: (widget.controller.maxValue -
+                              widget.controller.minValue) *
+                          10,
                       builder: (BuildContext context, int index) {
-                        index = index + widget.minValue * 10;
+                        index = index + widget.controller.minValue * 10;
                         return Center(
                           child: index % 10 == 0
                               ? ValueListenableBuilder<double>(

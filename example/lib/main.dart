@@ -13,16 +13,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late ValueSliderController _vcontroller;
   late ValueSliderController _hcontroller;
-  double _weight = 50.5;
-  int _minWeight = 10;
 
   @override
   void initState() {
     super.initState();
     _vcontroller =
-        ValueSliderController(initialWeight: _weight, minWeight: _minWeight);
+        ValueSliderController(value: 150, minValue: 100, maxValue: 200);
     _hcontroller =
-        ValueSliderController(initialWeight: _weight, minWeight: _minWeight);
+        ValueSliderController(value: 150, minValue: 100, maxValue: 200);
   }
 
   @override
@@ -44,8 +42,6 @@ class _MyAppState extends State<MyApp> {
           VerticalValueSlider(
             itemExtent: 5,
             controller: _vcontroller,
-            minValue: 100,
-            maxValue: 250,
             config: PointerConfig(
               gap: 0,
               pointerValueStyle: TextStyle(
@@ -66,8 +62,6 @@ class _MyAppState extends State<MyApp> {
           HorizontalValueSlider(
             itemExtent: 5,
             controller: _hcontroller,
-            minValue: 100,
-            maxValue: 250,
             config: PointerConfig(
               gap: 0,
               pointerValueStyle: TextStyle(

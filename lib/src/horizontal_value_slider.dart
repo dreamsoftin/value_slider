@@ -37,6 +37,7 @@ class HorizontalValueSlider extends StatelessWidget {
   /// Squeeze
   final double squeeze;
 
+  /// Builder to build custom widget when value changes.
   final Function(BuildContext context, double value)? builder;
 
   const HorizontalValueSlider({
@@ -82,23 +83,24 @@ class HorizontalValueSlider extends StatelessWidget {
                 child: ValueListenableBuilder<double>(
                   valueListenable: controller,
                   builder: (context, value, child) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "$value",
-                            style: valueLabelStyle ??
-                                const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                          ),
-                        ),
-                      ],
-                    );
+                    return builder?.call(context, value) ??
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "$value",
+                                style: valueLabelStyle ??
+                                    const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        );
                   },
                 ),
               ),

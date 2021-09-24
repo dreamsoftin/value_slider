@@ -55,7 +55,7 @@ class VerticalValueSlider extends StatefulWidget {
   final TextStyle? valueLabelStyle;
 
   /// Builder to build custom widget when value changes.
-  final Function(BuildContext, double)? builder;
+  final Widget Function(BuildContext, double)? builder;
 
   /// Squeeze
   final double squeeze;
@@ -176,23 +176,24 @@ class _VerticalValueSliderState extends State<VerticalValueSlider> {
                 child: ValueListenableBuilder<double>(
                   valueListenable: widget.controller,
                   builder: (context, value, child) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "$value",
-                            style: widget.valueLabelStyle ??
-                                const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                          ),
-                        ),
-                      ],
-                    );
+                    return widget.builder?.call(context, value) ??
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "$value",
+                                style: widget.valueLabelStyle ??
+                                    const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        );
                   },
                 ),
               ),

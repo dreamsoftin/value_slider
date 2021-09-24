@@ -19,6 +19,7 @@ class VerticalValueSlider extends StatefulWidget {
     this.valueLabelStyle,
     this.builder,
     this.width,
+    this.squeeze = 1,
   })  : assert(itemExtent >= 0),
         assert(maxValue >= 0),
         super(key: key);
@@ -56,6 +57,9 @@ class VerticalValueSlider extends StatefulWidget {
   /// Builder to build custom widget when value changes.
   final Function(BuildContext, double)? builder;
 
+  /// Squeeze
+  final double squeeze;
+
   @override
   State<VerticalValueSlider> createState() => _VerticalValueSliderState();
 }
@@ -88,7 +92,7 @@ class _VerticalValueSliderState extends State<VerticalValueSlider> {
               child: Stack(
                 children: [
                   ListWheelScrollView.useDelegate(
-                    squeeze: 1.4,
+                    squeeze: widget.squeeze,
                     scrollBehavior: ScrollBehavior(),
                     itemExtent: 12,
                     diameterRatio: 3.0,

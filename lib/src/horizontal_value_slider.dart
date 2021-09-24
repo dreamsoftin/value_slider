@@ -34,6 +34,9 @@ class HorizontalValueSlider extends StatelessWidget {
   /// Value label TextStyle
   final TextStyle? valueLabelStyle;
 
+  /// Squeeze
+  final double squeeze;
+
   final Function(BuildContext context, double value)? builder;
 
   const HorizontalValueSlider({
@@ -49,6 +52,7 @@ class HorizontalValueSlider extends StatelessWidget {
     required this.onChanged,
     this.valueLabelStyle,
     this.builder,
+    this.squeeze = 1,
   }) : super(key: key);
 
   @override
@@ -106,7 +110,7 @@ class HorizontalValueSlider extends StatelessWidget {
                   RotatedBox(
                     quarterTurns: 3,
                     child: ListWheelScrollView.useDelegate(
-                      squeeze: 1.4,
+                      squeeze: squeeze,
                       scrollBehavior: ScrollBehavior(),
                       itemExtent: 12,
                       diameterRatio: 3.0,
@@ -183,7 +187,7 @@ class HorizontalValueSlider extends StatelessWidget {
                             ],
                           ),
                         ),
-                      )
+                      ),
                 ],
               ),
             ),
